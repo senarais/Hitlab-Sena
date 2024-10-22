@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Tambah Mahasiswa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #additional-forms {
+            margin-top: 20px;
+        }
+        #clock {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Tambah Mahasiswa</h1>
+<div id="clock"></div> <!-- Jam akan ditampilkan di sini -->
+
+<form id="mahasiswa-form">
+    <label for="nama">Nama:</label>
+    <input type="text" id="nama" name="nama" required oninput="toUpperCaseInput(this)">
+
+    <label for="nim">NIM:</label>
+    <input type="text" id="nim" name="nim" required>
+
+    <label for="jenis_kelamin">Jenis Kelamin:</label>
+    <select id="jenis_kelamin" name="jenis_kelamin" required>
+        <option value="laki-laki">Laki-laki</option>
+        <option value="perempuan">Perempuan</option>
+    </select>
+
+    <button type="button" onclick="addForm()">Tambah Form</button>
+    <button type="button" onclick="submitForm()">Submit</button>
+</form>
+
+<div id="additional-forms"></div>
+
+<script>
+    // Fungsi untuk mengubah input nama menjadi uppercase secara otomatis
+    function toUpperCaseInput(input) {
+        input.value = input.value.toUpperCase();
+    }
+
+    // Fungsi untuk menambahkan form baru di bawah form yang ada
+    function addForm() {
+        const formContainer = document.createElement('div');
+        formContainer.innerHTML = `
+            <form>
+                <label for="nama">Nama:</label>
+                <input type="text" name="nama" required oninput="toUpperCaseInput(this)">
+        
+                <label for="nim">NIM:</label>
+                <input type="text" name="nim" required>
+        
+                <label for="jenis_kelamin">Jenis Kelamin:</label>
+                <select name="jenis_kelamin" required>
+                    <option value="laki-laki">Laki-laki</option>
+                    <option value="perempuan">Perempuan</option>
+                </select>
+            </form>
+        `;
+        document.getElementById('additional-forms').appendChild(formContainer);
+    }
+
+    // Fungsi untuk submit form dan menampilkan alert, lalu refresh halaman
+    function submitForm() {
+        alert("Selamat, data telah berhasil disimpan");
+        location.reload();  // Me-refresh halaman setelah submit
+    }
+
+    // Fungsi untuk menampilkan jam yang terus terupdate setiap detik
+    function updateClock() {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        const timeString = `${hours}:${minutes}:${seconds}`;
+        document.getElementById('clock').textContent = `Jam: ${timeString}`;
+    }
+
+    // Memperbarui jam setiap 1 detik (1000 milidetik)
+    setInterval(updateClock, 1000);
+</script>
+
+</body>
+</html>
